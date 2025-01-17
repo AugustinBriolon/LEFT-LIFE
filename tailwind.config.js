@@ -6,11 +6,7 @@ export default {
     "./src/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      "gridTemplateColumns": {
-        "home": "200px 1fr",
-      },
-    },
+    extend: {},
   },
   plugins: [],
 }
