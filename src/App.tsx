@@ -8,7 +8,7 @@ export default function App() {
     month: '',
     year: '',
   });
-  const [weeksLived, setWeeksLived] = useState<boolean[]>([]);
+  const [weeksLived, setWeeksLived] = useState<number | null>(null);
   const [error, setError] = useState('');
   const [isValidDateSubmitted, setIsValidDateSubmitted] = useState(false);
 
@@ -17,7 +17,9 @@ export default function App() {
   const yearInputRef = useRef<HTMLInputElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const inputsContainerRef = useRef<HTMLDivElement>(null);
-  const weeksContainerRef = useRef<HTMLDivElement>(null);
+  const squaresContainerRef = useRef<HTMLDivElement>(null);
+
+  const TOTAL_WEEKS = 90 * 52;
 
   const isValidDate = (day: number, month: number, year: number): boolean => {
     const date = new Date(year, month - 1, day);
@@ -42,17 +44,11 @@ export default function App() {
     return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
   };
 
-  const calculateWeeks = (birthDate: string): boolean[] => {
+  const calculateWeeksLived = (birthDate: string): number => {
     const startDate = new Date(birthDate);
     const today = new Date();
-    const totalWeeks = 90 * 52;
-    const weeksCompleted = Math.floor(
+    return Math.floor(
       (today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 7)
-    );
-
-    return Array.from(
-      { length: totalWeeks },
-      (_, index) => index < weeksCompleted
     );
   };
 
@@ -88,10 +84,18 @@ export default function App() {
       right: '50%',
       xPercent: 50,
     });
+
+    const squares = squaresContainerRef.current?.querySelectorAll('.week-square');
+    if (squares) {
+      gsap.set(squares, {
+        opacity: 0,
+        scale: 0,
+      });
+    }
   }, []);
 
   useGSAP(() => {
-    if (weeksLived.length > 0 && !isValidDateSubmitted) {
+    if (weeksLived !== null && !isValidDateSubmitted) {
       const timeline = gsap.timeline();
 
       timeline.to(titleRef.current, {
@@ -110,22 +114,16 @@ export default function App() {
         ease: 'power3.inOut'
       }, '<');
 
-      timeline.fromTo(
-        weeksContainerRef.current,
-        {
-          opacity: 0,
-          scale: 0.9,
-          y: 50
-        },
-        {
+      const squares = squaresContainerRef.current?.querySelectorAll('.week-square');
+      if (squares) {
+        timeline.to(squares, {
           opacity: 1,
           scale: 1,
-          y: 50,
-          duration: 1,
-          ease: 'power3.out'
-        },
-        '-=0.5'
-      );
+          duration: 0.5,
+          stagger: 0.001,
+          ease: 'expo.out',
+        }, '-=0.5');
+      }
 
       setIsValidDateSubmitted(true);
     }
@@ -149,13 +147,13 @@ export default function App() {
         return;
       }
 
-      const calculatedWeeks = calculateWeeks(dateStr);
+      const calculatedWeeks = calculateWeeksLived(dateStr);
       setWeeksLived(calculatedWeeks);
     }
   }, [dateInputs]);
 
   return (
-    <div className='relative h-screen w-screen bg-black overflow-hidden'>
+    <div className='relative h-screen w-screen flex items-center justify-center bg-black overflow-hidden'>
       <h1
         ref={titleRef}
         className="absolute text-white text-6xl"
@@ -201,19 +199,18 @@ export default function App() {
         {error && <p className='text-red-500 text-center'>{error}</p>}
       </div>
 
-      {weeksLived.length > 0 && (
-        <div
-          ref={weeksContainerRef}
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-h-[90vh] grid grid-cols-[repeat(52,10px)] gap-1 justify-center overflow-y-auto opacity-0'
-        >
-          {weeksLived.map((week, index) => (
-            <div
-              key={index}
-              className={`w-3 h-3 border border-white ${week ? 'bg-white' : 'bg-transparent'}`}
-            />
-          ))}
-        </div>
-      )}
+      <div
+        ref={squaresContainerRef}
+        className='w-full h-fit grid grid-cols-[repeat(52,10px)] gap-1 justify-center'
+      >
+        {Array.from({ length: TOTAL_WEEKS }, (_, index) => (
+          <div
+            key={index}
+            className={`week-square w-2.5 h-2.5 opacity-0 scale-0 will-change-transform border border-white ${weeksLived !== null && index < weeksLived ? 'bg-white' : 'bg-transparent'
+              }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
