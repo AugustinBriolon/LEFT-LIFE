@@ -14,7 +14,7 @@ export const WeeksGrid: React.FC<WeeksGridProps> = ({
 }) => (
   <div
     ref={containerRef}
-    className="w-full h-fit grid grid-cols-[repeat(52,6px)] gap-2 justify-center"
+    className="mt-1.5 w-fit h-full grid grid-cols-[repeat(52,6px)] grid-rows-[repeat(90,6px)] gap-1 content-center justify-center overflow-y-scroll"
   >
     {Array.from({ length: totalWeeks }, (_, index) => (
       <div

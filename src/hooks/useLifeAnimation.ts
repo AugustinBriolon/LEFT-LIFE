@@ -4,7 +4,8 @@ import gsap from 'gsap';
 export const useLifeAnimation = (
   titleRef: React.RefObject<HTMLHeadingElement>,
   inputsContainerRef: React.RefObject<HTMLDivElement>,
-  squaresContainerRef: React.RefObject<HTMLDivElement>
+  squaresContainerRef: React.RefObject<HTMLDivElement>,
+  buttonStatsRef: React.RefObject<HTMLButtonElement>
 ) => {
   useGSAP(() => {
     gsap.set(titleRef.current, {
@@ -66,6 +67,17 @@ export const useLifeAnimation = (
         '-=0.5'
       );
     }
+
+    timeline.to(
+      buttonStatsRef.current,
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        ease: 'expo.out',
+      },
+      '<'
+    );
   });
 
   return { startAnimation };

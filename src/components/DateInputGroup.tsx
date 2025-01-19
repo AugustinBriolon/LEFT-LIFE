@@ -21,8 +21,8 @@ export const DateInputGroup: React.FC<DateInputGroupProps> = ({
   error,
   refs,
 }) => (
-  <div className="flex flex-col gap-4 w-fit">
-    <div className="flex items-center gap-2 text-2xl">
+  <div className="flex flex-col items-end gap-4 w-fit">
+    <div className="flex items-center gap-2 text-xl">
       <DateInput
         value={dateInputs.day}
         placeholder="JJ"

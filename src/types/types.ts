@@ -13,3 +13,10 @@ export interface InputProps {
   inputRef?: React.RefObject<HTMLInputElement>;
   className?: string;
 }
+
+export type ChartType = 'lifeStages' | 'decades' | 'global' | 'quarters';
+
+export interface ChartData {
+  month: string;
+  desktop: number;
+}

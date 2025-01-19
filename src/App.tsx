@@ -9,8 +9,7 @@ import {
   formatDateString,
   calculateWeeksLived,
 } from './utils/dateUtils';
-
-const TOTAL_WEEKS = 90 * 52;
+import StatsModal from './components/StatsModal';
 
 export default function App() {
   const [dateInputs, setDateInputs] = useState<DateInputs>({
@@ -20,18 +19,23 @@ export default function App() {
   });
   const [weeksLived, setWeeksLived] = useState<number | null>(null);
   const [error, setError] = useState('');
+  const [deathAge, ] = useState(90)
+  
+  const TOTAL_WEEKS = deathAge * 52;
 
-  const dayInputRef = useRef<HTMLInputElement>(null);
+  const dayInputRef = useRef(null);
   const monthInputRef = useRef<HTMLInputElement>(null);
   const yearInputRef = useRef<HTMLInputElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const inputsContainerRef = useRef<HTMLDivElement>(null);
-  const squaresContainerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef(null);
+  const inputsContainerRef = useRef(null);
+  const squaresContainerRef = useRef(null);
+  const buttonStatsRef = useRef(null);
 
   const { startAnimation } = useLifeAnimation(
     titleRef,
     inputsContainerRef,
-    squaresContainerRef
+    squaresContainerRef,
+    buttonStatsRef
   );
 
   const handleInputChange = (field: keyof DateInputs, value: string) => {
@@ -71,8 +75,7 @@ export default function App() {
 
       const calculatedWeeks = calculateWeeksLived(dateStr);
       setWeeksLived(calculatedWeeks);
-
-      if (weeksLived) startAnimation();
+      startAnimation();
     }
   };
 
@@ -80,20 +83,20 @@ export default function App() {
     <div className='relative h-screen w-screen flex items-center justify-center bg-black overflow-hidden'>
       <h1
         ref={titleRef}
-        className='absolute text-white text-6xl w-fit text-center'
+        className='absolute text-white text-3xl w-fit text-center'
       >
         LEFT LIFE
       </h1>
 
-      <div ref={inputsContainerRef} className="absolute">
-      <DateInputGroup
-        dateInputs={dateInputs}
-        onInputChange={handleInputChange}
-        onDateChange={handleDateChange}
-        error={error}
-        refs={{ day: dayInputRef, month: monthInputRef, year: yearInputRef }}
-      />
-    </div>
+      <div ref={inputsContainerRef} className='absolute'>
+        <DateInputGroup
+          dateInputs={dateInputs}
+          onInputChange={handleInputChange}
+          onDateChange={handleDateChange}
+          error={error}
+          refs={{ day: dayInputRef, month: monthInputRef, year: yearInputRef }}
+        />
+      </div>
 
       {weeksLived && (
         <WeeksGrid
@@ -102,6 +105,8 @@ export default function App() {
           containerRef={squaresContainerRef}
         />
       )}
+
+    {weeksLived && <StatsModal weeksLived={weeksLived} totalWeeks={TOTAL_WEEKS} buttonRef={buttonStatsRef} />}
     </div>
   );
 }
