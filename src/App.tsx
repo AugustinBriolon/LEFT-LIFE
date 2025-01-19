@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { DateInputGroup } from './components/DateInputGroup';
 import { WeeksGrid } from './components/WeekGrid';
 import { useLifeAnimation } from './hooks/useLifeAnimation';
@@ -9,7 +9,7 @@ import {
   formatDateString,
   calculateWeeksLived,
 } from './utils/dateUtils';
-import StatsModal from './components/StatsModal';
+import { StatsModal } from './components/StatsModal';
 
 export default function App() {
   const [dateInputs, setDateInputs] = useState<DateInputs>({
@@ -19,8 +19,8 @@ export default function App() {
   });
   const [weeksLived, setWeeksLived] = useState<number | null>(null);
   const [error, setError] = useState('');
-  const [deathAge, ] = useState(90)
-  
+  const [deathAge,] = useState(90)
+
   const TOTAL_WEEKS = deathAge * 52;
 
   const dayInputRef = useRef(null);
@@ -91,22 +91,22 @@ export default function App() {
       <div ref={inputsContainerRef} className='absolute'>
         <DateInputGroup
           dateInputs={dateInputs}
-          onInputChange={handleInputChange}
-          onDateChange={handleDateChange}
           error={error}
           refs={{ day: dayInputRef, month: monthInputRef, year: yearInputRef }}
+          onDateChange={handleDateChange}
+          onInputChange={handleInputChange}
         />
       </div>
 
       {weeksLived && (
         <WeeksGrid
-          weeksLived={weeksLived}
+          ref={squaresContainerRef}
           totalWeeks={TOTAL_WEEKS}
-          containerRef={squaresContainerRef}
+          weeksLived={weeksLived}
         />
       )}
 
-    {weeksLived && <StatsModal weeksLived={weeksLived} totalWeeks={TOTAL_WEEKS} buttonRef={buttonStatsRef} />}
+      {weeksLived && <StatsModal ref={buttonStatsRef} totalWeeks={TOTAL_WEEKS} weeksLived={weeksLived} />}
     </div>
   );
 }

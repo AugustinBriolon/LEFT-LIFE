@@ -1,19 +1,17 @@
-import React from 'react';
 import clsx from 'clsx/lite';
+import { forwardRef } from 'react';
 
 interface WeeksGridProps {
   weeksLived: number;
   totalWeeks: number;
-  containerRef: React.RefObject<HTMLDivElement>;
 }
 
-export const WeeksGrid: React.FC<WeeksGridProps> = ({
+export const WeeksGrid = forwardRef<HTMLInputElement, WeeksGridProps>(({
   weeksLived,
   totalWeeks,
-  containerRef,
-}) => (
+}, ref) => (
   <div
-    ref={containerRef}
+    ref={ref}
     className="mt-1.5 w-fit h-full grid grid-cols-[repeat(52,6px)] grid-rows-[repeat(90,6px)] gap-1 content-center justify-center overflow-y-scroll"
   >
     {Array.from({ length: totalWeeks }, (_, index) => (
@@ -26,4 +24,4 @@ export const WeeksGrid: React.FC<WeeksGridProps> = ({
       />
     ))}
   </div>
-);
+));

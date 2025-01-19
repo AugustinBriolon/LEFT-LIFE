@@ -2,10 +2,10 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
 export const useLifeAnimation = (
-  titleRef: React.RefObject<HTMLHeadingElement>,
-  inputsContainerRef: React.RefObject<HTMLDivElement>,
-  squaresContainerRef: React.RefObject<HTMLDivElement>,
-  buttonStatsRef: React.RefObject<HTMLButtonElement>
+  titleRef: React.RefObject<HTMLHeadingElement | null>,
+  inputsContainerRef: React.RefObject<HTMLDivElement | null>,
+  squaresContainerRef: React.RefObject<HTMLDivElement | null>,
+  buttonStatsRef: React.RefObject<HTMLButtonElement | null>
 ) => {
   useGSAP(() => {
     gsap.set(titleRef.current, {

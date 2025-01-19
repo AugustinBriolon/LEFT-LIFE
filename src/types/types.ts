@@ -10,11 +10,8 @@ export interface InputProps {
   onChange: (value: string) => void;
   onKeyUp: () => void;
   maxLength: number;
-  inputRef?: React.RefObject<HTMLInputElement>;
   className?: string;
 }
-
-export type ChartType = 'lifeStages' | 'decades' | 'global' | 'quarters';
 
 export interface ChartData {
   month: string;

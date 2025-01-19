@@ -1,24 +1,23 @@
-import React from 'react';
-import { InputProps } from '../types/types';
+import { InputProps } from '@/types/types';
 import clsx from 'clsx';
+import { forwardRef } from 'react';
 
-export const DateInput: React.FC<InputProps> = ({
+export const DateInput = forwardRef<HTMLInputElement, InputProps>(({
   value,
   placeholder,
   onChange,
   onKeyUp,
   maxLength,
-  inputRef,
   className
-}) => (
+}, ref) => (
   <input
-    ref={inputRef}
-    type="text"
+    ref={ref}
+    className={clsx("w-16 p-2 text-center bg-black focus:outline-white/20 focus:outline-1 text-white" , className)}
+    maxLength={maxLength}
     placeholder={placeholder}
+    type="text"
     value={value}
     onChange={(e) => onChange(e.target.value)}
     onKeyUp={onKeyUp}
-    className={clsx("w-16 p-2 text-center bg-black focus:outline-white/20 focus:outline-1 text-white" , className)}
-    maxLength={maxLength}
   />
-);
+));

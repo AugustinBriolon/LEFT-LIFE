@@ -25,30 +25,30 @@ export default function Chart({ desktop, mobile, texte }: ChartProps) {
   };
 
   return (
-    <ChartContainer config={chartConfig} className='aspect-square w-[250px]'>
+    <ChartContainer className='aspect-square w-[250px]' config={chartConfig}>
       <RadialBarChart
         data={[chartData]}
         endAngle={180}
         innerRadius={80}
         outerRadius={130}
       >
-        <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+        <PolarRadiusAxis axisLine={false} tick={false} tickLine={false}>
           <Label
             content={({ viewBox }) => {
               if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                 return (
-                  <text x={viewBox.cx} y={viewBox.cy} textAnchor='middle'>
+                  <text textAnchor='middle' x={viewBox.cx} y={viewBox.cy}>
                     <tspan
+                      className='fill-foreground text-2xl font-bold'
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) - 16}
-                      className='fill-foreground text-2xl font-bold'
                     >
                       {chartData.desktop}
                     </tspan>
                     <tspan
+                      className='fill-muted-foreground'
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + 4}
-                      className='fill-muted-foreground'
                     >
                       Semaine {texte}
                     </tspan>
@@ -59,18 +59,18 @@ export default function Chart({ desktop, mobile, texte }: ChartProps) {
           />
         </PolarRadiusAxis>
         <RadialBar
-          dataKey='desktop'
-          stackId='a'
-          cornerRadius={5}
-          fill='var(--color-desktop)'
           className='stroke-transparent stroke-2'
+          cornerRadius={5}
+          dataKey='desktop'
+          fill='var(--color-desktop)'
+          stackId='a'
         />
         <RadialBar
+          className='stroke-transparent stroke-2'
+          cornerRadius={5}
           dataKey='mobile'
           fill='var(--color-mobile)'
           stackId='a'
-          cornerRadius={5}
-          className='stroke-transparent stroke-2'
         />
       </RadialBarChart>
     </ChartContainer>

@@ -1,6 +1,6 @@
-import React from 'react';
-import { DateInput } from './DateInput';
+import { RefObject } from 'react';
 import { DateInputs } from '../types/types';
+import { DateInput } from './DateInput';
 
 interface DateInputGroupProps {
   dateInputs: DateInputs;
@@ -8,47 +8,47 @@ interface DateInputGroupProps {
   onDateChange: () => void;
   error: string;
   refs: {
-    day: React.RefObject<HTMLInputElement>;
-    month: React.RefObject<HTMLInputElement>;
-    year: React.RefObject<HTMLInputElement>;
+    day: RefObject<HTMLInputElement | null>;
+    month: RefObject<HTMLInputElement | null>;
+    year: RefObject<HTMLInputElement | null>;
   };
 }
 
-export const DateInputGroup: React.FC<DateInputGroupProps> = ({
+export const DateInputGroup = ({
   dateInputs,
   onInputChange,
   onDateChange,
   error,
   refs,
-}) => (
+}: DateInputGroupProps) => (
   <div className="flex flex-col items-end gap-4 w-fit">
     <div className="flex items-center gap-2 text-xl">
       <DateInput
-        value={dateInputs.day}
+        ref={refs.day}
+        maxLength={2}
         placeholder="JJ"
+        value={dateInputs.day}
         onChange={(value) => onInputChange('day', value)}
         onKeyUp={onDateChange}
-        maxLength={2}
-        inputRef={refs.day}
       />
       <span className="text-white">/</span>
       <DateInput
-        value={dateInputs.month}
+        ref={refs.month}
+        maxLength={2}
         placeholder="MM"
+        value={dateInputs.month}
         onChange={(value) => onInputChange('month', value)}
         onKeyUp={onDateChange}
-        maxLength={2}
-        inputRef={refs.month}
       />
       <span className="text-white">/</span>
       <DateInput
-        value={dateInputs.year}
+        ref={refs.year}
+        className='w-20'
+        maxLength={4}
         placeholder="AAAA"
+        value={dateInputs.year}
         onChange={(value) => onInputChange('year', value)}
         onKeyUp={onDateChange}
-        maxLength={4}
-        inputRef={refs.year}
-        className='w-20'
       />
     </div>
     {error && <p className="text-red-500 text-center">{error}</p>}
