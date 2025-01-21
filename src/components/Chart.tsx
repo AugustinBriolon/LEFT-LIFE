@@ -39,7 +39,7 @@ export default function Chart({ desktop, mobile, texte }: ChartProps) {
                 return (
                   <text textAnchor='middle' x={viewBox.cx} y={viewBox.cy}>
                     <tspan
-                      className='fill-foreground text-2xl font-bold'
+                      className='fill-foreground text-xl font-bold font-game'
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) - 16}
                     >
@@ -50,7 +50,7 @@ export default function Chart({ desktop, mobile, texte }: ChartProps) {
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + 4}
                     >
-                      Semaine {texte}
+                      Weeks {texte}
                     </tspan>
                   </text>
                 );
@@ -61,15 +61,15 @@ export default function Chart({ desktop, mobile, texte }: ChartProps) {
         <RadialBar
           className='stroke-transparent stroke-2'
           cornerRadius={5}
-          dataKey='desktop'
-          fill='var(--color-desktop)'
+          dataKey='mobile'
+          fill='var(--color-mobile)'
           stackId='a'
         />
         <RadialBar
           className='stroke-transparent stroke-2'
           cornerRadius={5}
-          dataKey='mobile'
-          fill='var(--color-mobile)'
+          dataKey='desktop'
+          fill='var(--color-desktop)'
           stackId='a'
         />
       </RadialBarChart>

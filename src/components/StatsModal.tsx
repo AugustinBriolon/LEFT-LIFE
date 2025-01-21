@@ -1,82 +1,98 @@
-import clsx from 'clsx/lite';
-import { forwardRef, useState } from 'react';
-import Chart from './Chart';
+import { forwardRef } from 'react';
 import { ChartIcon } from './Icons';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 interface StatsModalProps {
   weeksLived: number;
   totalWeeks: number;
 }
 
-export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(({
-  weeksLived,
-  totalWeeks,
-}, ref) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const remainingWeeks = totalWeeks - weeksLived;
+export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
+  ({ weeksLived, totalWeeks }, ref) => {
+    const remainingWeeks = totalWeeks - weeksLived;
+    const percentageLived = ((weeksLived * 100) / totalWeeks).toFixed(2);
+    const yearsLived = Math.floor(weeksLived / 52);
+    const remainingYears = Math.floor(remainingWeeks / 52);
+    const monthsLived = Math.floor(weeksLived * 12 / 52);
 
-  return (
-    <>
-      <button
-        ref={ref}
-        className='fixed bottom-6 right-6 flex items-center gap-2 bg-white/15 hover:bg-white/10 text-white px-4 py-2 opacity-0 scale-0'
-        onClick={() => setIsOpen(true)}
-      >
-        <ChartIcon className='w-5 h-5' />
-      </button>
+    return (
+      <Dialog>
+        <DialogTrigger asChild>
+          <button
+            ref={ref}
+            className="fixed bottom-6 right-6 flex scale-0 items-center gap-2 bg-white/15 px-4 py-2 text-white opacity-0 hover:bg-white/10"
+          >
+            <ChartIcon className="h-5 w-5" />
+          </button>
+        </DialogTrigger>
+        
+        <DialogContent className="bg-zinc-900 text-white border-zinc-800 sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle className="text-3xl font-bold uppercase">
+              Life Progress
+            </DialogTitle>
+          </DialogHeader>
 
-      <div
-        className={clsx(
-          'fixed inset-0 bg-black/80 backdrop-blur-sm',
-          !isOpen && 'hidden'
-        )}
-        onClick={() => setIsOpen(false)}
-      >
-        <div
-          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-zinc-900 text-white p-8'
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className='flex justify-between items-center mb-8'>
-            <h2 className='text-3xl font-bold uppercase'>Statistiques</h2>
-            <button
-              className='text-white/60 hover:text-white transition-colors'
-              onClick={() => setIsOpen(false)}
-            >
-              ✕
-            </button>
-          </div>
-
-          <div className='space-y-6'>
-            <div className='grid grid-cols-2 gap-4'>
-              <div className='bg-white/5 p-4'>
-                <p className='text-sm text-white/60'>Semaines vécues</p>
-                <p className='text-3xl font-bold'>
-                  {weeksLived.toLocaleString()}
-                </p>
+          <div className="space-y-6">
+            <div className="bg-white/5 p-6">
+              <div className="flex flex-col gap-2 items-center mb-6">
+                <p className="text-4xl font-game text-white/90">{percentageLived}%</p>
+                <p className="text-sm text-white/60 uppercase tracking-wider">Life Progress</p>
               </div>
-              <div className='bg-white/5 p-4'>
-                <p className='text-sm text-white/60'>Semaines restantes</p>
-                <p className='text-3xl font-bold'>
-                  {remainingWeeks.toLocaleString()}
-                </p>
+              
+              <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                <div 
+                  className="bg-white h-full rounded-full transition-all duration-1000"
+                  style={{ width: `${percentageLived}%` }}
+                />
               </div>
             </div>
-            <div className='flex justify-between items-center gap-2'>
-              <Chart desktop={weeksLived} mobile={totalWeeks} texte='Vécues' />
-              <Chart desktop={remainingWeeks} mobile={totalWeeks} texte='Restantes' />
+
+            {/* Detailed Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="bg-white/5 p-6">
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-2xl font-game">{yearsLived}</p>
+                    <p className="text-sm text-white/60">Years Lived</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-game">{monthsLived}</p>
+                    <p className="text-sm text-white/60">Months Lived</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-game">{weeksLived.toLocaleString()}</p>
+                    <p className="text-sm text-white/60">Weeks Lived</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white/5 p-6">
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-2xl font-game">{remainingYears}</p>
+                    <p className="text-sm text-white/60">Years Remaining</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-game">{Math.floor(remainingWeeks * 12 / 52)}</p>
+                    <p className="text-sm text-white/60">Months Remaining</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-game">{remainingWeeks.toLocaleString()}</p>
+                    <p className="text-sm text-white/60">Weeks Remaining</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className='mt-8 flex justify-end'>
-            <button
-              className='bg-white/15 hover:bg-white/10 px-6 py-2 transition-colors duration-300'
-              onClick={() => setIsOpen(false)}
-            >
-              Fermer
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-});
+        </DialogContent>
+      </Dialog>
+    );
+  },
+);
