@@ -12,7 +12,7 @@ export const WeeksGrid = forwardRef<HTMLInputElement, WeeksGridProps>(({
 }, ref) => (
   <div
     ref={ref}
-    className="mt-0 md:mt-1.5 w-fit h-full grid grid-cols-[repeat(52,6px)] grid-rows-[repeat(90,6px)] gap-[1x] md:gap-1 content-center justify-center overflow-y-scroll"
+    className="mt-0 md:mt-1.5 w-fit h-full grid grid-cols-[repeat(52,6px)] grid-rows-[repeat(90,6px)] gap-[1px] md:gap-1 content-center justify-center overflow-y-scroll"
   >
     {Array.from({ length: totalWeeks }, (_, index) => (
       <div

@@ -1,12 +1,13 @@
 import { forwardRef } from 'react';
 import { ChartIcon } from './Icons';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
 
 interface StatsModalProps {
   weeksLived: number;
@@ -22,22 +23,22 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
     const monthsLived = Math.floor(weeksLived * 12 / 52);
 
     return (
-      <Dialog>
-        <DialogTrigger asChild>
+      <Drawer>
+        <DrawerTrigger asChild>
           <button
             ref={ref}
-            className="fixed top-8 md:top-button right-6 flex scale-0 items-center gap-2 bg-white px-4 py-2 text-black opacity-0 hover:bg-white/90 rounded-tree"
+            className="fixed top-8 md:top-button right-10 flex scale-0 items-center gap-2 bg-white px-4 py-2 text-black opacity-0 hover:bg-white/90 rounded-tree"
           >
-            <ChartIcon className="h-5 w-5 text-black" strokeWidth={2} />
+            <ChartIcon className="h-5 w-5 text-black" strokeWidth={2.5} />
           </button>
-        </DialogTrigger>
+        </DrawerTrigger>
         
-        <DialogContent className="bg-zinc-900 text-white border-zinc-800 sm:max-w-[600px] !rounded-tree">
-          <DialogHeader>
-            <DialogTitle className="text-3xl font-bold uppercase">
+        <DrawerContent className="bg-zinc-900 text-white border-zinc-800 p-4">
+          <DrawerHeader>
+            <DrawerTitle className="text-3xl font-bold uppercase">
               Life Progress
-            </DialogTitle>
-          </DialogHeader>
+            </DrawerTitle>
+          </DrawerHeader>
 
           <div className="space-y-6">
             <div className="bg-white/5 p-6 rounded-tree">
@@ -91,8 +92,8 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
               </div>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </DrawerContent>
+      </Drawer>
     );
   },
 );

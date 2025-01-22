@@ -114,7 +114,7 @@ export const useLifeAnimation = (
         duration: 0.5,
         ease: 'expo.out',
       },
-      '-=0.5'
+      '>'
     );
   });
 

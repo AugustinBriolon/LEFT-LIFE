@@ -51,7 +51,7 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       spacing: {
-        button: 'calc(100dvh - 3.5rem)',
+        button: 'calc(100dvh - 4.5rem)',
       },
     },
   },
