@@ -26,13 +26,13 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
         <DialogTrigger asChild>
           <button
             ref={ref}
-            className="fixed bottom-6 right-6 flex scale-0 items-center gap-2 bg-white/15 px-4 py-2 text-white opacity-0 hover:bg-white/10"
+            className="fixed top-8 md:top-button right-6 flex scale-0 items-center gap-2 bg-white px-4 py-2 text-black opacity-0 hover:bg-white/90 rounded-tree"
           >
-            <ChartIcon className="h-5 w-5" />
+            <ChartIcon className="h-5 w-5 text-black" strokeWidth={2} />
           </button>
         </DialogTrigger>
         
-        <DialogContent className="bg-zinc-900 text-white border-zinc-800 sm:max-w-[600px]">
+        <DialogContent className="bg-zinc-900 text-white border-zinc-800 sm:max-w-[600px] !rounded-tree">
           <DialogHeader>
             <DialogTitle className="text-3xl font-bold uppercase">
               Life Progress
@@ -40,7 +40,7 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
           </DialogHeader>
 
           <div className="space-y-6">
-            <div className="bg-white/5 p-6">
+            <div className="bg-white/5 p-6 rounded-tree">
               <div className="flex flex-col gap-2 items-center mb-6">
                 <p className="text-4xl font-game text-white/90">{percentageLived}%</p>
                 <p className="text-sm text-white/60 uppercase tracking-wider">Life Progress</p>
@@ -56,7 +56,7 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
 
             {/* Detailed Stats */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="bg-white/5 p-6">
+              <div className="bg-white/5 p-6 rounded-tree">
                 <div className="space-y-4">
                   <div>
                     <p className="text-2xl font-game">{yearsLived}</p>
@@ -73,7 +73,7 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
                 </div>
               </div>
 
-              <div className="bg-white/5 p-6">
+              <div className="bg-white/5 p-6 rounded-tree">
                 <div className="space-y-4">
                   <div>
                     <p className="text-2xl font-game">{remainingYears}</p>

@@ -21,7 +21,7 @@ export const DateInputGroup = ({
   error,
   refs,
 }: DateInputGroupProps) => (
-  <div className="flex flex-col items-end gap-4 w-fit">
+  <div className="flex flex-col items-end gap-4 w-fit ">
     <div className="flex items-center gap-2 text-xl">
       <DateInput
         ref={refs.day}

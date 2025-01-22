@@ -1,4 +1,9 @@
-export const ChartIcon = ({className}: {className?: string}) => (
+interface IconProps {
+  className?: string;
+  strokeWidth?: number;
+}
+
+export const ChartIcon = ({ className, strokeWidth }: IconProps) => (
   <svg
     className={className}
     height='200'
@@ -11,7 +16,7 @@ export const ChartIcon = ({className}: {className?: string}) => (
       fill='none'
       stroke='currentColor'
       strokeLinecap='round'
-      strokeWidth='1.5'
+      strokeWidth={strokeWidth ? strokeWidth : 1.5}
     />
   </svg>
 );

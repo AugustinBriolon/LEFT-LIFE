@@ -83,9 +83,11 @@ export default function App() {
     <div className='relative h-screen w-screen flex items-center justify-center bg-black overflow-hidden'>
       <h1
         ref={titleRef}
-        className='absolute text-white text-3xl w-fit text-center'
+        className='absolute text-white text-3xl w-fit text-center whitespace-pre'
       >
-        LEFT LIFE
+        LEFT
+        <br />
+        LIFE
       </h1>
 
       <div ref={inputsContainerRef} className='absolute'>

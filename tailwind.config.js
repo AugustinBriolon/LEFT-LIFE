@@ -44,9 +44,14 @@ export default {
         },
       },
       borderRadius: {
+        one: "1px",
+        tree: "3px",
         lg: `var(--radius)`,
         md: `calc(var(--radius) - 2px)`,
         sm: "calc(var(--radius) - 4px)",
+      },
+      spacing: {
+        button: 'calc(100dvh - 3.5rem)',
       },
     },
   },
