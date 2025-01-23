@@ -87,7 +87,7 @@ export default function App() {
       >
         LEFT
         <br />
-        LIFE
+        TIME
       </h1>
 
       <div ref={inputsContainerRef} className='absolute'>

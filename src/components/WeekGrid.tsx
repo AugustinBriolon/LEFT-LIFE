@@ -18,7 +18,7 @@ export const WeeksGrid = forwardRef<HTMLInputElement, WeeksGridProps>(({
       <div
         key={index}
         className={clsx(
-          'week-square w-[3px] h-[3px] opacity-0 scale-0 will-change-transform rounded-one',
+          'week-square w-[3px] md:w-[5px] h-[3px] md:h-[5px] opacity-0 scale-0 will-change-transform rounded-one',
           index < weeksLived ? 'bg-white/20 ' : 'bg-white'
         )}
       />

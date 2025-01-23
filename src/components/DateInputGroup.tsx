@@ -28,7 +28,7 @@ export const DateInputGroup = ({
         maxLength={2}
         placeholder="JJ"
         value={dateInputs.day}
-        onChange={(value) => onInputChange('day', value)}
+        onChange={(e) => onInputChange('day', e.target.value)}
         onKeyUp={onDateChange}
       />
       <span className="text-white">/</span>
@@ -37,7 +37,7 @@ export const DateInputGroup = ({
         maxLength={2}
         placeholder="MM"
         value={dateInputs.month}
-        onChange={(value) => onInputChange('month', value)}
+        onChange={(e) => onInputChange('month', e.target.value)}
         onKeyUp={onDateChange}
       />
       <span className="text-white">/</span>
@@ -47,7 +47,7 @@ export const DateInputGroup = ({
         maxLength={4}
         placeholder="AAAA"
         value={dateInputs.year}
-        onChange={(value) => onInputChange('year', value)}
+        onChange={(e) => onInputChange('year', e.target.value)}
         onKeyUp={onDateChange}
       />
     </div>
