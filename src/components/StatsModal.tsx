@@ -2,7 +2,6 @@ import { forwardRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ChartIcon } from './Icons';
-import clsx from 'clsx';
 
 interface StatsModalProps {
   weeksLived: number;
@@ -35,18 +34,20 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
     }, [isOpen]);
 
     const handleClose = () => {
-      gsap.to('.modal-content', {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.inOut',
-      });
-      gsap.to('.modal-overlay', {
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.inOut',
-        onComplete: () => setIsOpen(false),
-      });
+      gsap
+        .timeline()
+        .to('.modal-content', {
+          scale: 0.8,
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.inOut',
+        })
+        .to('.modal-overlay', {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.inOut',
+        }, '<')
+        .add(() => setIsOpen(false));
     };
 
     return (
@@ -61,15 +62,15 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
 
         {isOpen && (
           <div
-            className="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/50 opacity-0"
+            className="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 opacity-0 backdrop-blur-sm md:p-0"
             onClick={handleClose}
           >
             <div
-              className="modal-content w-full max-w-2xl scale-95 space-y-6 rounded-tree bg-zinc-900 p-6 text-white opacity-0 shadow-xl"
+              className="modal-content max-h-[90dvh] w-full max-w-[calc(100vw-2rem)] scale-95 space-y-4 overflow-y-auto rounded-tree bg-zinc-900 p-4 text-white opacity-0 shadow-xl md:max-w-2xl md:space-y-6 md:p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-bold uppercase">Life Progress</h2>
+                <h2 className="text-2xl font-bold uppercase md:text-3xl">Life Progress</h2>
                 <button
                   className="rounded-lg p-1 transition-colors hover:bg-white/10"
                   onClick={handleClose}
@@ -80,10 +81,12 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
                 </button>
               </div>
 
-              <div className="rounded-tree bg-white/5 p-6">
-                <div className="mb-6 flex flex-col items-center gap-2">
-                  <p className="font-game text-4xl text-white/90">{percentageLived}%</p>
-                  <p className="text-sm uppercase tracking-wider text-white/60">Life Progress</p>
+              <div className="rounded-tree bg-white/5 p-4 md:p-6">
+                <div className="mb-4 flex flex-col items-center gap-2 md:mb-6">
+                  <p className="font-game text-3xl text-white/90 md:text-4xl">{percentageLived}%</p>
+                  <p className="text-xs uppercase tracking-wider text-white/60 md:text-sm">
+                    Life Progress
+                  </p>
                 </div>
 
                 <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
@@ -94,7 +97,7 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
                 <div className="rounded-tree bg-white/5 p-6">
                   <div className="space-y-4">
                     <div>
