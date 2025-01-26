@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { DateInputGroup } from './components/DateInputGroup';
 import { WeeksGrid } from './components/WeekGrid';
-import { useLifeAnimation } from './hooks/useLifeAnimation';
+import { useAnimation } from './hooks/useAnimation';
 import { DateInputs } from './types/types';
 import {
   isValidDate,
@@ -31,7 +31,7 @@ export default function App() {
   const squaresContainerRef = useRef(null);
   const buttonStatsRef = useRef(null);
 
-  const { startAnimation } = useLifeAnimation(
+  const { startAnimation } = useAnimation(
     titleRef,
     inputsContainerRef,
     squaresContainerRef,

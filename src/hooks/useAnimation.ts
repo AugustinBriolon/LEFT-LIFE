@@ -1,7 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
-export const useLifeAnimation = (
+export const useAnimation = (
   titleRef: React.RefObject<HTMLHeadingElement | null>,
   inputsContainerRef: React.RefObject<HTMLDivElement | null>,
   squaresContainerRef: React.RefObject<HTMLDivElement | null>,
@@ -91,6 +91,10 @@ export const useLifeAnimation = (
       );
     });
 
+    if (!squaresContainerRef.current) {
+      setTimeout(startAnimation, 100);
+      return;
+    }
     const squares = squaresContainerRef.current?.querySelectorAll('.week-square');
     if (squares) {
       timeline.to(
@@ -102,7 +106,7 @@ export const useLifeAnimation = (
           stagger: 0.001,
           ease: 'expo.out',
         },
-        '-=0.5'
+        '.5'
       );
     }
 
