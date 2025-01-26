@@ -27,9 +27,9 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
         <DrawerTrigger asChild>
           <button
             ref={ref}
-            className="fixed top-8 md:top-button right-10 flex scale-0 items-center gap-2 bg-black px-4 py-2 border border-white opacity-0 rounded-tree"
+            className="fixed top-8 md:top-button right-10 flex scale-0 items-center gap-2 bg-white px-4 py-2 opacity-0 rounded-tree"
           >
-            <ChartIcon className="h-5 w-5 text-white" strokeWidth={2.5} />
+            <ChartIcon className="h-5 w-5 text-black" strokeWidth={2.5} />
           </button>
         </DrawerTrigger>
         

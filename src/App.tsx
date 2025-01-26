@@ -80,7 +80,7 @@ export default function App() {
   };
 
   return (
-    <div className='relative h-screen w-screen flex items-center justify-center bg-black overflow-hidden'>
+    <div className='relative h-[100dvh] w-screen flex items-center justify-center bg-black overflow-hidden'>
       <h1
         ref={titleRef}
         className='absolute text-white text-3xl w-fit text-center whitespace-pre'
