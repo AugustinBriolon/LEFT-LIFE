@@ -53,6 +53,9 @@ export default {
       spacing: {
         button: 'calc(100dvh - 4.5rem)',
       },
+      maxHeight: {
+        grid: 'calc(100vh - 80px)'
+      }
     },
   },
   plugins: [import("tailwindcss-animate")],

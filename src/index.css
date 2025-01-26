@@ -5,19 +5,27 @@
 *,
 *::before,
 *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
   background-color: black;
 }
 
-.font-game {
-  font-family: 'Press Start 2P', serif;
-  font-weight: 400;
+@font-face {
   font-style: normal;
+  font-weight: normal;
+  src: url('/font/PressStart2P.ttf') format('truetype');
+  font-family: 'Press Start 2P';
+  font-display: swap;
+}
+
+.font-game {
+  font-style: normal;
+  font-weight: 400;
+  font-family: 'Press Start 2P', serif;
 }
 
 h1,
@@ -55,7 +63,6 @@ h3 {
       --chart-5: 240 2% 26%;
     }
   }
-  
 }
 
 @layer base {
@@ -66,4 +73,3 @@ h3 {
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
-

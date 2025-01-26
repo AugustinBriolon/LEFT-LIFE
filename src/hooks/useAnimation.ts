@@ -12,7 +12,7 @@ export const useAnimation = (
 
   useGSAP(() => {
     gsap.set(titleRef.current, {
-      top: '40%',
+      top: '35%',
       left: '50%',
       xPercent: -50,
     });

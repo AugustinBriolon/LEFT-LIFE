@@ -1,6 +1,8 @@
 {
-  "name": "Left Time",
+  "name": "Left Time ⏳ - Visualisez votre temps",
   "short_name": "Left Time",
+  "description": "⏳ Visualisez le temps qu'il vous reste en semaines",
+  "start_url": "/",
   "icons": [
     {
       "src": "/favicon/web-app-manifest-192x192.png",
@@ -15,7 +17,16 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
-  "display": "standalone"
-}
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "orientation": "portrait",
+  "categories": ["productivity", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "/screenshots/mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png"
+    }
+  ]
+ }
