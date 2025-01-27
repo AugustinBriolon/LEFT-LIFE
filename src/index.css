@@ -34,6 +34,25 @@ h3 {
   font-family: 'Press Start 2P', serif;
 }
 
+
+.cursor-hover {
+  transform: scale(1.2);
+}
+
+button, 
+a, 
+input,
+[role="button"] {
+  cursor: none;
+}
+
+.modal-overlay {
+  isolation: isolate;
+}
+
+.modal-content {
+  isolation: isolate;
+}
 @layer base {
   @layer base {
     :root {

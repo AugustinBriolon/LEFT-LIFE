@@ -1,7 +1,7 @@
 import { forwardRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { ChartIcon } from './Icons';
+import { ChartIcon, GithubIcon } from './Icons';
 
 interface StatsModalProps {
   weeksLived: number;
@@ -42,11 +42,15 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
           duration: 0.3,
           ease: 'power2.inOut',
         })
-        .to('.modal-overlay', {
-          opacity: 0,
-          duration: 0.3,
-          ease: 'power2.inOut',
-        }, '<')
+        .to(
+          '.modal-overlay',
+          {
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power2.inOut',
+          },
+          '<',
+        )
         .add(() => setIsOpen(false));
     };
 
@@ -66,7 +70,7 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
             onClick={handleClose}
           >
             <div
-              className="modal-content max-h-[90dvh] w-full max-w-[calc(100vw-2rem)] scale-95 space-y-4 overflow-y-auto rounded-tree bg-zinc-900 p-4 text-white opacity-0 shadow-xl md:max-w-2xl md:space-y-6 md:p-6"
+              className="modal-content relative max-h-[90dvh] w-full max-w-[calc(100vw-2rem)] scale-95 space-y-4 overflow-y-auto rounded-tree bg-zinc-900 p-4 text-white opacity-0 shadow-xl md:max-w-2xl md:space-y-6 md:p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between">
@@ -131,6 +135,32 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className="flex w-full items-center justify-between gap-4">
+                <p className="text-xs">
+                  Code by
+                  <a
+                    className="mx-1 font-bold hover:underline"
+                    href="https://august1.dev/"
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    Augustin Briolon
+                  </a>
+                  with{' '}
+                  <span aria-label="heart" role="img">
+                    ❤️
+                  </span>
+                </p>
+                <a
+                  className="p-1 transition-colors hover:bg-white/10"
+                  href="https://github.com/AugustinBriolon/LEFT-LIFE"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <GithubIcon className="aspect-square h-5 w-5" />
+                </a>
               </div>
             </div>
           </div>

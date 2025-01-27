@@ -10,6 +10,7 @@ import {
   calculateWeeksLived,
 } from './utils/dateUtils';
 import { StatsModal } from './components/StatsModal';
+import { Cursor } from './components/Cursor';
 
 export default function App() {
   const [dateInputs, setDateInputs] = useState<DateInputs>({
@@ -19,7 +20,7 @@ export default function App() {
   });
   const [weeksLived, setWeeksLived] = useState<number | null>(null);
   const [error, setError] = useState('');
-  const [deathAge,] = useState(90)
+  const [deathAge] = useState(90);
 
   const TOTAL_WEEKS = deathAge * 52;
 
@@ -35,7 +36,7 @@ export default function App() {
     titleRef,
     inputsContainerRef,
     squaresContainerRef,
-    buttonStatsRef
+    buttonStatsRef,
   );
 
   const handleInputChange = (field: keyof DateInputs, value: string) => {
@@ -80,17 +81,15 @@ export default function App() {
   };
 
   return (
-    <div className='relative h-dvh w-screen flex items-center justify-center overflow-hidden'>
-      <h1
-        ref={titleRef}
-        className='absolute text-white text-3xl w-fit text-center whitespace-pre'
-      >
+    <div className="relative flex h-dvh w-screen items-center justify-center overflow-hidden">
+      <Cursor />
+      <h1 ref={titleRef} className="absolute w-fit whitespace-pre text-center text-3xl text-white">
         LEFT
         <br />
         TIME
       </h1>
 
-      <div ref={inputsContainerRef} className='absolute'>
+      <div ref={inputsContainerRef} className="absolute">
         <DateInputGroup
           dateInputs={dateInputs}
           error={error}
@@ -101,14 +100,12 @@ export default function App() {
       </div>
 
       {weeksLived && (
-        <WeeksGrid
-          ref={squaresContainerRef}
-          totalWeeks={TOTAL_WEEKS}
-          weeksLived={weeksLived}
-        />
+        <WeeksGrid ref={squaresContainerRef} totalWeeks={TOTAL_WEEKS} weeksLived={weeksLived} />
       )}
 
-      {weeksLived && <StatsModal ref={buttonStatsRef} totalWeeks={TOTAL_WEEKS} weeksLived={weeksLived} />}
+      {weeksLived && (
+        <StatsModal ref={buttonStatsRef} totalWeeks={TOTAL_WEEKS} weeksLived={weeksLived} />
+      )}
     </div>
   );
 }
