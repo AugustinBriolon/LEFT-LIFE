@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
 
 export const useCursor = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
@@ -12,12 +11,7 @@ export const useCursor = () => {
     const cursor = cursorRef.current;
     
     const onMouseMove = (e: MouseEvent) => {
-      gsap.to(cursor, {
-        duration: 0.5,
-        x: e.clientX - cursor.offsetWidth / 2,
-        y: e.clientY - cursor.offsetHeight / 2,
-        ease: 'power2.out'
-      });
+      cursor.style.transform = `translate(${e.clientX - cursor.offsetWidth / 2}px, ${e.clientY - cursor.offsetHeight / 2}px)`;
     };
 
     window.addEventListener('mousemove', onMouseMove);
