@@ -1,6 +1,7 @@
 import { forwardRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { useTimeEntries } from '@/api/get.handler';
 import { ChartIcon, GithubIcon } from './Icons';
 
 interface StatsModalProps {
@@ -10,6 +11,7 @@ interface StatsModalProps {
 
 export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
   ({ weeksLived, totalWeeks }, ref) => {
+    const { data, isLoading, isError } = useTimeEntries();
     const [isOpen, setIsOpen] = useState(false);
     const remainingWeeks = totalWeeks - weeksLived;
     const percentageLived = ((weeksLived * 100) / totalWeeks).toFixed(2);
@@ -53,6 +55,8 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
         )
         .add(() => setIsOpen(false));
     };
+
+    console.log(!isLoading && data);
 
     return (
       <>

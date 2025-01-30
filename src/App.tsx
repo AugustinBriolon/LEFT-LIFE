@@ -1,16 +1,17 @@
 import { useRef, useState } from 'react';
-import { DateInputGroup } from './components/DateInputGroup';
-import { WeeksGrid } from './components/WeekGrid';
-import { useAnimation } from './hooks/useAnimation';
-import { DateInputs } from './types/types';
+import { DateInputGroup } from '@/components/DateInputGroup';
+import { WeeksGrid } from '@/components/WeekGrid';
+import { useAnimation } from '@/hooks/useAnimation';
+import { DateInputs } from '@/types/types';
 import {
   isValidDate,
   isDateInRange,
   formatDateString,
   calculateWeeksLived,
 } from './utils/dateUtils';
-import { StatsModal } from './components/StatsModal';
-import { Cursor } from './components/Cursor';
+import { StatsModal } from '@/components/StatsModal';
+import { Cursor } from '@/components/Cursor';
+import { usePostTimeEntries } from '@/api/post.handler';
 
 export default function App() {
   const [dateInputs, setDateInputs] = useState<DateInputs>({
@@ -20,9 +21,11 @@ export default function App() {
   });
   const [weeksLived, setWeeksLived] = useState<number | null>(null);
   const [error, setError] = useState('');
-  const [deathAge] = useState(90);
+  const [isDateSet, setIsDateSet] = useState(false);
 
-  const TOTAL_WEEKS = deathAge * 52;
+  const { mutate } = usePostTimeEntries();
+
+  const TOTAL_WEEKS = 90 * 52;
 
   const dayInputRef = useRef(null);
   const monthInputRef = useRef<HTMLInputElement>(null);
@@ -76,6 +79,12 @@ export default function App() {
 
       const calculatedWeeks = calculateWeeksLived(dateStr);
       setWeeksLived(calculatedWeeks);
+
+      console.log( {birthdate: dateStr, timeleft: TOTAL_WEEKS - calculatedWeeks });
+      if(!isDateSet) {
+        mutate({ birthdate: dateStr, timeleft: TOTAL_WEEKS - calculatedWeeks });
+      }
+      setIsDateSet(true);
       startAnimation();
     }
   };

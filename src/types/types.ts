@@ -9,3 +9,8 @@ export interface ChartData {
   month: string;
   desktop: number;
 }
+
+export interface TimeEntries {
+  birthdate: string;
+  timeleft: number;
+}
