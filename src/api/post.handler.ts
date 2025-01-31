@@ -1,7 +1,7 @@
 import { TimeEntries } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const url = "/api/time-entries"
+const url = window.location.href === 'https://left-time.august1.dev/' ? 'https://716nf7z5el.execute-api.eu-west-1.amazonaws.com/dev/v1/time-entries' :'/api/time-entries';
 
 const postTimeEntries = async (body: TimeEntries) => {
   const response = await fetch(url, {
