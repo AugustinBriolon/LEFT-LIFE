@@ -1,17 +1,17 @@
 import { useRef, useState } from 'react';
-import { DateInputGroup } from '@/components/DateInputGroup';
-import { WeeksGrid } from '@/components/WeekGrid';
+import { DateInputGroup } from '@/components/features/date/DateInputGroup';
+import { WeeksGrid } from '@/components/features/date/WeekGrid';
 import { useAnimation } from '@/hooks/useAnimation';
-import { DateInputs } from '@/types/types';
+import { DateInputs } from '@/types/date.types';
 import {
   isValidDate,
   isDateInRange,
   formatDateString,
   calculateWeeksLived,
 } from './utils/dateUtils';
-import { StatsModal } from '@/components/StatsModal';
-import { Cursor } from '@/components/Cursor';
-import { usePostTimeEntries } from '@/api/post.handler';
+import { StatsModal } from '@/components/features/stats/StatsModal';
+import { Cursor } from '@/components/features/Cursor';
+import { usePostTimeEntries } from '@/api/handler/post.handler';
 
 export default function App() {
   const [dateInputs, setDateInputs] = useState<DateInputs>({

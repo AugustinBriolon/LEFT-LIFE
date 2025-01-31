@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { CursorIcon } from './Icons';
-import { useCursor } from '../hooks/useCursor';
-import { cn } from '../lib/utils';
+import { CursorIcon } from '../common/Icons';
+import { useCursor } from '@/hooks/useCursor';
+import { cn } from '@/lib/utils';
 
 export const Cursor = memo(() => {
   const cursorRef = useCursor();

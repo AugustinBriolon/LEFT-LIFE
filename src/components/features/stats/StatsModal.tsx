@@ -1,8 +1,8 @@
 import { forwardRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-// import { useTimeEntries } from '@/api/get.handler';
-import { ChartIcon, GithubIcon } from './Icons';
+import { ChartIcon, GithubIcon } from '@/components/common/Icons';
+
 
 interface StatsModalProps {
   weeksLived: number;

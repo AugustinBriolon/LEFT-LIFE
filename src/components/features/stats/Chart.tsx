@@ -1,5 +1,6 @@
+import { ChartConfig, ChartContainer } from '@/components/common/ui/chart';
 import { Label, PolarRadiusAxis, RadialBar, RadialBarChart } from 'recharts';
-import { ChartConfig, ChartContainer } from './ui/chart';
+
 
 interface ChartProps {
   desktop: number;

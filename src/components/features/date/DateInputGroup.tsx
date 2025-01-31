@@ -1,6 +1,7 @@
 import { RefObject } from 'react';
-import { DateInputs } from '../types/types';
+
 import { DateInput } from './DateInput';
+import { DateInputs } from '@/types/date.types';
 
 interface DateInputGroupProps {
   dateInputs: DateInputs;
