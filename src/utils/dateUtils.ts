@@ -1,4 +1,4 @@
-import { DateInputs } from "../types/types";
+import { DateInputs } from "@/types/date.types";
 
 export const isValidDate = (day: number, month: number, year: number): boolean => {
   const date = new Date(year, month - 1, day);
