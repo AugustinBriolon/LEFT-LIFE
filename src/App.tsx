@@ -80,7 +80,6 @@ export default function App() {
       const calculatedWeeks = calculateWeeksLived(dateStr);
       setWeeksLived(calculatedWeeks);
 
-      console.log( {birthdate: dateStr, timeleft: TOTAL_WEEKS - calculatedWeeks });
       if(!isDateSet) {
         mutate({ birthdate: dateStr, timeleft: TOTAL_WEEKS - calculatedWeeks });
       }
