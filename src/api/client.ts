@@ -1,7 +1,7 @@
 import { TimeEntries } from "@/types/api.types";
 
 const BASE_URL = window.location.href === 'https://left-time.august1.dev/' 
-  ? 'https://716nf7z5el.execute-api.eu-west-1.amazonaws.com/dev/v1'
+  ? 'https://iaxds7xhni.execute-api.eu-west-1.amazonaws.com/prod/v1'
   : '/api';
 
 const DEFAULT_HEADERS = {
