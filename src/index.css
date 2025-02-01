@@ -53,6 +53,11 @@ input,
 .modal-content {
   isolation: isolate;
 }
+
+.recharts-wrapper {
+  cursor: none !important;
+}
+
 @layer base {
   @layer base {
     :root {

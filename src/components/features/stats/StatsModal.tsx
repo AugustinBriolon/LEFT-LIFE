@@ -1,8 +1,9 @@
 import { forwardRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { useTimeEntries } from '@/api/handler/get.handler';
 import { ChartIcon, GithubIcon } from '@/components/common/Icons';
-
+import Chart from './Chart';
 
 interface StatsModalProps {
   weeksLived: number;
@@ -11,13 +12,14 @@ interface StatsModalProps {
 
 export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
   ({ weeksLived, totalWeeks }, ref) => {
-    // const { data, isLoading, isError } = useTimeEntries();
+    const { data, isLoading, isError } = useTimeEntries();
     const [isOpen, setIsOpen] = useState(false);
     const remainingWeeks = totalWeeks - weeksLived;
     const percentageLived = ((weeksLived * 100) / totalWeeks).toFixed(2);
     const yearsLived = Math.floor(weeksLived / 52);
     const remainingYears = Math.floor(remainingWeeks / 52);
     const monthsLived = Math.floor((weeksLived * 12) / 52);
+    const userTimeLeft = 90 * 52 - weeksLived;
 
     useGSAP(() => {
       if (isOpen) {
@@ -72,7 +74,7 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
             onClick={handleClose}
           >
             <div
-              className="modal-content relative max-h-[90dvh] w-full max-w-[calc(100vw-2rem)] scale-95 space-y-4 overflow-y-auto rounded-tree bg-zinc-900 p-4 text-white opacity-0 shadow-xl md:max-w-2xl md:space-y-6 md:p-6"
+              className="modal-content relative max-h-[90dvh] md:max-h-[75dvh] w-full max-w-[calc(100vw-2rem)] scale-95 space-y-4 overflow-y-auto rounded-tree bg-zinc-900 p-2 pt-4 text-white opacity-0 shadow-xl md:max-w-2xl md:space-y-6 md:p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between">
@@ -103,20 +105,20 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
                 <div className="rounded-tree bg-white/5 p-6">
                   <div className="space-y-4">
                     <div>
                       <p className="font-game text-2xl">{yearsLived}</p>
-                      <p className="text-sm text-white/60">Years Lived</p>
+                      <p className="text-sm text-white/60">Années vécues</p>
                     </div>
                     <div>
                       <p className="font-game text-2xl">{monthsLived}</p>
-                      <p className="text-sm text-white/60">Months Lived</p>
+                      <p className="text-sm text-white/60">Mois vécus</p>
                     </div>
                     <div>
                       <p className="font-game text-2xl">{weeksLived.toLocaleString()}</p>
-                      <p className="text-sm text-white/60">Weeks Lived</p>
+                      <p className="text-sm text-white/60">Semaines vécues</p>
                     </div>
                   </div>
                 </div>
@@ -125,18 +127,27 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
                   <div className="space-y-4">
                     <div>
                       <p className="font-game text-2xl">{remainingYears}</p>
-                      <p className="text-sm text-white/60">Years Remaining</p>
+                      <p className="text-sm text-white/60">Années restantes</p>
                     </div>
                     <div>
                       <p className="font-game text-2xl">{Math.floor((remainingWeeks * 12) / 52)}</p>
-                      <p className="text-sm text-white/60">Months Remaining</p>
+                      <p className="text-sm text-white/60">Mois restants</p>
                     </div>
                     <div>
                       <p className="font-game text-2xl">{remainingWeeks.toLocaleString()}</p>
-                      <p className="text-sm text-white/60">Weeks Remaining</p>
+                      <p className="text-sm text-white/60">Semaines restantes</p>
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className="rounded-tree bg-white/5 p-4 md:p-6">
+                <Chart 
+                  data={data || []}
+                  isError={isError}
+                  isLoading={isLoading}
+                  userTimeLeft={userTimeLeft}
+                />
               </div>
 
               <div className="flex w-full items-center justify-between gap-4">

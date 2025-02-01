@@ -8,14 +8,5 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'https://716nf7z5el.execute-api.eu-west-1.amazonaws.com/dev/v1',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
-  },
+  }
 });
