@@ -2,18 +2,14 @@ import { memo, useMemo } from 'react';
 import { ChartContainer, ChartTooltip } from '@/components/common/ui/chart';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ReferenceLine } from 'recharts';
 import { mockChartData } from '@/utils/mockData';
-
-interface TimeLeftData {
-  timeleft: number;
-  birthdate?: string;
-}
-
-interface ChartProps {
-  data: TimeLeftData[];
-  isLoading: boolean;
-  isError: boolean;
-  userTimeLeft: number;
-}
+import {
+  ChartData,
+  ChartProps,
+  DecadeGroup,
+  LoadingChartProps,
+  SkeletonData,
+  TooltipContentProps,
+} from '@/types/stats.types';
 
 const Chart = memo(({ data, isLoading, isError, userTimeLeft }: ChartProps) => {
   const dataToUse = useMemo(() => {
@@ -45,21 +41,23 @@ const Chart = memo(({ data, isLoading, isError, userTimeLeft }: ChartProps) => {
 
         return acc;
       },
-      {} as Record<string, { count: number; semaines: number[]; annees: number[] }>,
+      {} as Record<string, DecadeGroup>,
     );
 
     return Object.entries(decadeGroups)
-      .map(([decade, info]) => ({
-        name: `${decade}`,
-        decade,
-        nombre: info.count,
-        semaines: info.semaines,
-        annees: info.annees,
-      }))
+      .map(
+        ([decade, info]): ChartData => ({
+          name: `${decade}`,
+          decade,
+          nombre: info.count,
+          semaines: info.semaines,
+          annees: info.annees,
+        }),
+      )
       .sort((a, b) => parseInt(a.decade) - parseInt(b.decade));
   }, [dataToUse]);
 
-  const skeletonData = useMemo(() => {
+  const skeletonData = useMemo((): SkeletonData[] => {
     return Array.from({ length: 5 }, (_, i) => ({
       name: `${1970 + i * 10}s`,
       nombre: Math.random() * 10,
@@ -70,13 +68,24 @@ const Chart = memo(({ data, isLoading, isError, userTimeLeft }: ChartProps) => {
   }, []);
 
   const userGroup = useMemo(() => {
-    const userEntry = dataToUse.find(entry => entry.timeleft === userTimeLeft);
+    const userEntry = dataToUse.find((entry) => entry.timeleft === userTimeLeft);
     if (!userEntry?.birthdate) return null;
+
     const birthYear = new Date(userEntry.birthdate).getFullYear();
     const userDecade = `${Math.floor(birthYear / 10) * 10}s`;
-    return processedData.find(group => group.name === userDecade);
+
+    return processedData.find((group) => group.name === userDecade);
   }, [dataToUse, userTimeLeft, processedData]);
-  
+
+  const chartConfig = {
+    distribution: {
+      theme: {
+        light: '#FFFFFF',
+        dark: '#FFFFFF',
+      },
+      label: "Nombre d'utilisateurs",
+    },
+  };
 
   if (isLoading) {
     return <LoadingChart skeletonData={skeletonData} />;
@@ -84,23 +93,8 @@ const Chart = memo(({ data, isLoading, isError, userTimeLeft }: ChartProps) => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-semibold">
-        {isError
-          ? 'Distribution des utilisateurs par décennie (données de démonstration)'
-          : 'Distribution des utilisateurs par décennie'}
-      </h3>
-      <ChartContainer
-        className="h-[300px] w-full"
-        config={{
-          distribution: {
-            theme: {
-              light: '#FFFFFF',
-              dark: '#FFFFFF',
-            },
-            label: "Nombre d'utilisateurs",
-          },
-        }}
-      >
+      <h3 className="text-lg font-semibold">Distribution des utilisateurs par décennie</h3>
+      <ChartContainer className="h-[300px] w-full" config={chartConfig}>
         <BarChart data={processedData} margin={{ top: 20, right: 30, left: 20, bottom: 25 }}>
           <CartesianGrid className="stroke-white/10" strokeDasharray="3 3" />
           <XAxis
@@ -109,7 +103,7 @@ const Chart = memo(({ data, isLoading, isError, userTimeLeft }: ChartProps) => {
             label={{
               value: 'Décennie',
               position: 'bottom',
-              offset: 20,
+              offset: -2,
               className: 'fill-white/80',
             }}
           />
@@ -122,7 +116,7 @@ const Chart = memo(({ data, isLoading, isError, userTimeLeft }: ChartProps) => {
               className: 'fill-white/80',
             }}
           />
-          <ChartTooltip content={renderTooltip(isError)} />
+          <ChartTooltip content={renderTooltip()} />
           <Bar className="fill-white/80" dataKey="nombre" />
           {userGroup && (
             <ReferenceLine
@@ -142,8 +136,7 @@ const Chart = memo(({ data, isLoading, isError, userTimeLeft }: ChartProps) => {
   );
 });
 
-// Composant pour l'état de chargement
-const LoadingChart = ({ skeletonData }: { skeletonData: any[] }) => (
+const LoadingChart = ({ skeletonData }: LoadingChartProps) => (
   <div className="space-y-4">
     <h3 className="text-lg font-semibold">Distribution des utilisateurs par décennie</h3>
     <ChartContainer
@@ -166,7 +159,7 @@ const LoadingChart = ({ skeletonData }: { skeletonData: any[] }) => (
           label={{
             value: 'Décennie',
             position: 'bottom',
-            offset: 20,
+            offset: -2,
             className: 'fill-white/20',
           }}
         />
@@ -185,10 +178,9 @@ const LoadingChart = ({ skeletonData }: { skeletonData: any[] }) => (
   </div>
 );
 
-// Fonction de rendu du tooltip
-const renderTooltip = (isError: boolean) => {
-  return ({ active, payload }: { active?: boolean; payload?: any[] }) => {
-    if (!active || !payload?.[0]) return null;
+const renderTooltip = () => {
+  return ({ active, payload }: TooltipContentProps) => {
+    if (!active || !payload?.[0] || payload[0].payload === undefined) return null;
 
     const value = Number(payload[0].value);
     const isValidNumber = !Number.isNaN(value);
@@ -206,7 +198,6 @@ const renderTooltip = (isError: boolean) => {
         <p className="text-sm text-white/60">
           Moyenne d&apos;années restantes : {Math.round(avgYearsLeft)}
         </p>
-        {isError && <p className="mt-1 text-xs text-white/40">Données de démonstration</p>}
       </div>
     );
   };

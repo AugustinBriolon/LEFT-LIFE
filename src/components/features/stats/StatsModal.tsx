@@ -74,7 +74,7 @@ export const StatsModal = forwardRef<HTMLButtonElement, StatsModalProps>(
             onClick={handleClose}
           >
             <div
-              className="modal-content relative max-h-[90dvh] md:max-h-[75dvh] w-full max-w-[calc(100vw-2rem)] scale-95 space-y-4 overflow-y-auto rounded-tree bg-zinc-900 p-2 pt-4 text-white opacity-0 shadow-xl md:max-w-2xl md:space-y-6 md:p-6"
+              className="modal-content relative max-h-[90dvh] md:max-h-[75dvh] w-full max-w-[calc(100vw-2rem)] scale-95 space-y-4 overflow-y-auto no-scrollbar rounded-tree bg-zinc-900 p-2 pt-4 text-white opacity-0 shadow-xl md:max-w-2xl md:space-y-6 md:p-6"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between">
